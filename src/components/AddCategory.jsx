@@ -1,19 +1,23 @@
 import { useState } from 'react';
+import  PropTypes  from 'prop-types';
 
-export const AddCategories = ( { setCategories, categories } )=>{
-    const [inputValue, setinputValue] = useState('One punch')
+export const AddCategory = ( { onNewCategory } )=>{
+    const [inputValue, setInputValue] = useState('Search Gifs')
     const onInputChange = (event)=>{
-        setinputValue( event.target.value )
+        setInputValue( event.target.value )
     }
 
     const onSubmit = (event)=>{
-       event.preventDefoult();
+       event.preventDefault();
        if( inputValue.trim().length <= 1 ) return;
-       setCategories((categories)=>[ inputValue, ...categories,]);
+       
+       onNewCategory( inputValue.trim());
+       setInputValue('');
     }
 
     return( 
-    <form onSubmit={(event)=> onSubmit(event)}>
+        //<form onSubmit={(event)=> onSubmit(event)}>
+        <form onSubmit={ onSubmit }>
         <input 
         type="text "
         placeholder="Buscar gif"
@@ -23,4 +27,7 @@ export const AddCategories = ( { setCategories, categories } )=>{
     </form>
         
     )
+}
+AddCategory.propTypes = {
+  onNewCategory: PropTypes.func.isRequired,
 }
